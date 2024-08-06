@@ -11,7 +11,7 @@ public class BrokenFloorTest {
         // I don't know how to apply the standart one or is it even possible
         int low = 1;
         int high = bbf.getNFloors();
-        int mid = (low + high) / 2;
+        int mid = low + (high - low) / 2;
         int res = high;
 
         while (low <= high) {
@@ -22,14 +22,14 @@ public class BrokenFloorTest {
                 res = mid;
                 high = mid - 1;
             }
-            mid = (low + high) / 2;
+            mid = low + (high - low) / 2;
         }
         return res;
     }
 
     @Test
     void minimalBrokenFloorTest() {
-        int[] floors = {200, 17, 69, 1001, 2000, 696969};
+        int[] floors = {200, 17, 69, 1001, 2000, Integer.MAX_VALUE - 1};
         for (int i = 0; i < floors.length; i++) {
             BallBrokenFloor bbf = new BallBrokenFloor(floors[i]);
             assertEquals(bbf.getMinBrokenFloor(), getMinimalBrokenFloor(bbf));

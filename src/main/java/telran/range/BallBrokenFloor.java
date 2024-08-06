@@ -3,6 +3,7 @@ package telran.range;
 import java.util.Random;
 
 public class BallBrokenFloor {
+
     private int nFloors;
     private int minBrokenFloor;
 
@@ -12,7 +13,7 @@ public class BallBrokenFloor {
     }
 
     public int getMinBrokenFloor() {
-        // Theis getter is for testing purposes only
+        // This getter is for testing purposes only
         return minBrokenFloor;
     }
 

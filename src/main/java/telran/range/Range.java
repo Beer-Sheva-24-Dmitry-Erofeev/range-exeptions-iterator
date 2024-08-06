@@ -5,7 +5,7 @@ import telran.range.exceptions.OutOfRangeMinValueException;
 
 public class Range {
 
-    private static final String ERROR_MESSAGE = "Max less or equal Min";
+    private static final String ERR_MESS_MAX_LESS_OR_EQUAL_MIN = "Max less or equal Min";
 
     private int min;
     private int max;
@@ -17,7 +17,7 @@ public class Range {
 
     public static Range getRange(int min, int max) {
         if (max <= min) {
-            throw new IllegalArgumentException(ERROR_MESSAGE);
+            throw new IllegalArgumentException(ERR_MESS_MAX_LESS_OR_EQUAL_MIN);
         }
         return new Range(min, max);
     }
