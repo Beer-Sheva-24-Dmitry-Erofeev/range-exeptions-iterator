@@ -17,13 +17,6 @@ public class BallBrokenFloor {
         return minBrokenFloor;
     }
 
-    public int getNFloors() {
-        // Я добавил этот геттер, потому что не понимаю, как иначе
-        // можно получить общее количество этажей, поскольку nFloors у нас private
-        // Это правильно или нет?
-        return nFloors;
-    }
-
     public void checkFloor(int floor) throws Exception {
         if (floor > nFloors) {
             throw new IllegalArgumentException();
