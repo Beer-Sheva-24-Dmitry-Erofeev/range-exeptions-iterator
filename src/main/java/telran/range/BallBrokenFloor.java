@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class BallBrokenFloor {
 
-    private int nFloors;
-    private int minBrokenFloor;
+    private final int nFloors;
+    private final int minBrokenFloor;
 
     public BallBrokenFloor(int nFloors) {
         this.nFloors = nFloors;
