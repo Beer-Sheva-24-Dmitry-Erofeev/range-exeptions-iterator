@@ -2,6 +2,7 @@ package telran.range;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 import telran.range.exceptions.OutOfRangeMaxValueException;
 import telran.range.exceptions.OutOfRangeMinValueException;
@@ -12,6 +13,7 @@ public class Range implements Iterable<Integer> {
 
     private final int min;
     private final int max;
+    private Predicate<Integer> predicate;
 
     private Range(int min, int max) {
         this.min = min;
@@ -20,16 +22,25 @@ public class Range implements Iterable<Integer> {
 
     @Override
     public Iterator<Integer> iterator() {
+        // Reset the predicate to null by default
+        this.predicate = null;
         return new RangeIterator();
     }
 
+    // Inner class or nested class - class within a class
     private class RangeIterator implements Iterator<Integer> {
 
         int current = min;
 
         @Override
+        // Checks if there are more of the same class objects to iterate
+        // Applies predicate if it's not null
         public boolean hasNext() {
-            // It just checks if threre are more of the same calss objects to iterate
+            if (predicate != null) {
+                while (current <= max && !predicate.test(current)) {
+                    current++;
+                }
+            }
             return current <= max;
         }
 
@@ -39,9 +50,14 @@ public class Range implements Iterable<Integer> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
+            // It returns "current" and ONLY AFTER THAT "++" increments it!
             return current++;
         }
-        
+
+    }
+
+    public void setPredicate(Predicate<Integer> predicate) {
+        this.predicate = predicate;
     }
 
     public static Range getRange(int min, int max) {
