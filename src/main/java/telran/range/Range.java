@@ -9,7 +9,7 @@ import telran.range.exceptions.OutOfRangeMinValueException;
 
 public class Range implements Iterable<Integer> {
 
-    private static final String ERR_MESS_MAX_LESS_OR_EQUAL_MIN = "Max less or equal Min";
+    private static final String ERROR_MESSAGE_MAX_LESS_OR_EQUAL_MIN = "Max less or equal Min";
 
     private final int min;
     private final int max;
@@ -22,8 +22,6 @@ public class Range implements Iterable<Integer> {
 
     @Override
     public Iterator<Integer> iterator() {
-        // Reset the predicate to null by default
-        this.predicate = null;
         return new RangeIterator();
     }
 
@@ -32,15 +30,13 @@ public class Range implements Iterable<Integer> {
 
         int current = min;
 
+        public RangeIterator() {
+            this.current = findNextValid(min);
+        }
+
         @Override
         // Checks if there are more of the same class objects to iterate
-        // Applies predicate if it's not null
         public boolean hasNext() {
-            if (predicate != null) {
-                while (current <= max && !predicate.test(current)) {
-                    current++;
-                }
-            }
             return current <= max;
         }
 
@@ -50,8 +46,18 @@ public class Range implements Iterable<Integer> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            // It returns "current" and ONLY AFTER THAT "++" increments it!
-            return current++;
+            int nextValue = current;
+            current = findNextValid(current + 1);
+            return nextValue;
+        }
+
+        private int findNextValid(int next) {
+            if (predicate != null) {
+                while (next <= max && !predicate.test(next)) {
+                    next++;
+                }
+            }
+            return next;
         }
 
     }
@@ -62,7 +68,7 @@ public class Range implements Iterable<Integer> {
 
     public static Range getRange(int min, int max) {
         if (max <= min) {
-            throw new IllegalArgumentException(ERR_MESS_MAX_LESS_OR_EQUAL_MIN);
+            throw new IllegalArgumentException(ERROR_MESSAGE_MAX_LESS_OR_EQUAL_MIN);
         }
         return new Range(min, max);
     }

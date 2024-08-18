@@ -49,20 +49,21 @@ public class RangeTest {
         Integer[] expectedNoPredicate = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 
         // Test even number predicate
-        Iterator<Integer> iteratorEvens = rangeIt.iterator();
         rangeIt.setPredicate(isEvenNumber);
+        Iterator<Integer> iteratorEvens = rangeIt.iterator();
         Integer[] actualEvens = iterateArray(expectedEvens, iteratorEvens);
         assertArrayEquals(expectedEvens, actualEvens);
         assertThrowsExactly(NoSuchElementException.class, iteratorEvens::next);
 
         // Test odd number predicate
-        Iterator<Integer> iteratorOdds = rangeIt.iterator();
         rangeIt.setPredicate(isOddNumber);
+        Iterator<Integer> iteratorOdds = rangeIt.iterator();
         Integer[] actualOdds = iterateArray(expectedOdds, iteratorOdds);
         assertArrayEquals(expectedOdds, actualOdds);
         assertThrowsExactly(NoSuchElementException.class, iteratorOdds::next);
 
         // Test with no predicate
+        rangeIt.setPredicate(null);
         Iterator<Integer> iteratorNoPredicate = rangeIt.iterator();
         Integer[] actualNoPredicate = iterateArray(expectedNoPredicate, iteratorNoPredicate);
         assertArrayEquals(expectedNoPredicate, actualNoPredicate);
